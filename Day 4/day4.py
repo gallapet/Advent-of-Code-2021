@@ -11,6 +11,7 @@ for item in numbers_to_draw_text:
     numbers_to_draw.append(int(item))
 
 scorecards = []
+scores = []
 line_number = 1
 
 while line_number < len(i_a) - 1:
@@ -28,12 +29,13 @@ while line_number < len(i_a) - 1:
         line_number += 1
 
     scorecards.append(card)
+    scores.append(0)
 
 def mark_card(card, number):
     for row in range(5):
         for column in range(5):
             if card[row][column] == number:
-                card[row][number] = None
+                card[row][column] = None
                 return
 
 def get_card_total(card):
@@ -45,9 +47,9 @@ def get_card_total(card):
     return score
 
 def find_winning_card(card):
-    count_row = 0
-    count_column = 0
     for row in range(5):
+        count_row = 0
+        count_column = 0
         for column in range(5):
             if card[row][column] == None:
                 count_row += 1
@@ -57,11 +59,27 @@ def find_winning_card(card):
             return True
     return False
 
-
+winning_card_found = False
+last_winning_score = 0
 for number in numbers_to_draw:
     print('')
     print(f"Number drawn: {number}")
+    number_of_card = 0
     for card in scorecards:
         mark_card(card, number)
         score = get_card_total(card)
         winning_card = find_winning_card(card)
+        print(number_of_card + 1, score, winning_card)
+
+        if winning_card and scores[number_of_card] == 0:
+            print(f"Card {number_of_card + 1} wins now")
+            scores[number_of_card] = score * number
+            last_winning_score = score * number
+            winning_card_found = True
+        
+        number_of_card += 1
+
+        # if winning_card_found:
+        #     break
+
+print(last_winning_score)
