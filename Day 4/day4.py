@@ -1,5 +1,3 @@
-from pprint import pprint as pp
-
 x = open('test.txt', 'r')
 
 i_a = []
@@ -20,9 +18,15 @@ while line_number < len(i_a) - 1:
         line_number += 1
     card = []
     for i in range(5):
-        
+        text_array = i_a[line_number].strip()\
+            .replace('  ', ' ')\
+            .replace('\n', '')\
+            .split(' ')
+        row = list(map(lambda x: int(x), text_array))
 
+        card.append(row)
+        line_number += 1
 
-print('')
-print(scorecard_numbers)
-print('')
+    scorecards.append(card)
+    
+print(scorecards)
